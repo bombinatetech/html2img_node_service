@@ -8,7 +8,7 @@ app.set('view engine', 'ejs');
 //     // res.send("name: " + req.params.name + ", \n score: " + req.params.score + ", image: " + req.params.image)
 // })
 
-app.get('/convertHtml2image', function (req, res) {
+app.get('/convertHtml2image1', function (req, res) {
     res.render('banner', { qs: req.query })
 })
 
