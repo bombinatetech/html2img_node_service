@@ -4,7 +4,8 @@ var path = require('path');
 var http = require('http');
 var Request = require("request");
 var FormData = require('form-data');
-
+var FileAPI = require('file-api')
+    , File = FileAPI.File, FileList = FileAPI.FileList, FileReader = FileAPI.FileReader;
 var app = express();
 app.set('view engine', 'ejs');
 const nodeHtmlToImage = require('node-html-to-image')
@@ -20,34 +21,40 @@ app.get('/convertHtml2image1', function (req, res) {
         }
     })
         .then(() => {
-
-            let readStream = fs.createReadStream(`banner.png`)
-            readStream.on('data', (chunk) => {
-                let img = chunk.toString('base64')
-                // console.log("file: ", "data:image/png;base64," + img);
-            })
-            // readStream.on('open', function () {
-            //     readStream.pipe(res);
-            // });
-            console.log("readStream: ", readStream);
-
-
-            var formData = new FormData();
-            formData.append('content_file', readStream);
-            Request.post({
-                "headers": {
-                    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJjaGVja19zYWx0X2tleSI6dHJ1ZSwiYW5zd2VyZXJUeXBlIjowLCJzYWx0IjoiWXRlbmRFcjEyMzQ1dGdibm9wdWd5dWZndmpoYmtvcHV5dHJlc2RyZnR5Z3VpIiwibmJmIjoxNTg0NDMxMzU5LCJ1c2VyX2lkIjoiNWI3ZjIzYjc0YTRmZTYwYTE2MGU3NmRiIiwicGhvbmUiOiI3MDAwNTg2MjQ5IiwiZ2VuZXJhdGVkX2F0IjoxNTg0NDMxMzU5Mjk4LCJjdXJyZW50X2xhbmd1YWdlIjowLCJjcmVhdGVkX2F0IjoxNTE0NTE0NDg0LCJpZCI6MTE4OTU0LCJleHAiOjE1OTIyMDczNTksImlhdCI6MTU4NDQzMTM1OX0.Tvb61e7G6dYGWQGopBhMBbSDCGqozL8SyODcoRmAYpI"
-                },
-                "url": "https://api.oktalk.com/web/channels/owner/topics/image/upload",
-                "body": formData
-            }, (error, response, body) => {
-                if (error) {
-                    return console.log("Error: ", error);
+            fs.readFile(`banner.png`, "base64", function read(err, data) {
+                // fs.readFileSync(`banner.png`, function read(err, data) {
+                if (err) {
+                    throw err;
                 }
-                res.send("image_url: " + response.url)
-                // res.send("output: " + error + ", " + JSON.stringify(response) + ", " + body)
-            });
 
+                var file = data;
+                // var file = new File({
+                //     buffer: data,
+                //     name: "banner.png",
+                //     type: "image/png",
+                //     jsdom: true,
+                //     async: true,
+                // });
+                // console.log("file: ", file);
+
+                var formData = new FormData();
+                formData.append('content_file', file);
+                console.log("formData: ", formData);
+
+                Request.post({
+                    "headers": {
+                        "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJjaGVja19zYWx0X2tleSI6dHJ1ZSwiYW5zd2VyZXJUeXBlIjowLCJzYWx0IjoiWXRlbmRFcjEyMzQ1dGdibm9wdWd5dWZndmpoYmtvcHV5dHJlc2RyZnR5Z3VpIiwibmJmIjoxNTg0NDMxMzU5LCJ1c2VyX2lkIjoiNWI3ZjIzYjc0YTRmZTYwYTE2MGU3NmRiIiwicGhvbmUiOiI3MDAwNTg2MjQ5IiwiZ2VuZXJhdGVkX2F0IjoxNTg0NDMxMzU5Mjk4LCJjdXJyZW50X2xhbmd1YWdlIjowLCJjcmVhdGVkX2F0IjoxNTE0NTE0NDg0LCJpZCI6MTE4OTU0LCJleHAiOjE1OTIyMDczNTksImlhdCI6MTU4NDQzMTM1OX0.Tvb61e7G6dYGWQGopBhMBbSDCGqozL8SyODcoRmAYpI"
+                    },
+                    "url": "https://api.oktalk.com/web/channels/owner/topics/image/upload",
+                    "body": formData
+                }, (error, response, body) => {
+                    if (error) {
+                        return console.log("Error: ", error);
+                    }
+                    // res.send("image_url: " + "response.url")
+                    res.send("output: " + error + ", " + JSON.stringify(response) + ", " + body)
+                });
+            });
         })
 })
 

@@ -11,6 +11,7 @@
   "dependencies": {
     "ejs": "^3.0.1",
     "express": "^4.17.1",
+    "file-api": "^0.10.4",
     "form-data": "^3.0.0",
     "html-to-image": "^0.1.1",
     "html2canvas": "^1.0.0-rc.5",
