@@ -10,7 +10,13 @@
   "license": "ISC",
   "dependencies": {
     "ejs": "^3.0.1",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "form-data": "^3.0.0",
+    "html-to-image": "^0.1.1",
+    "html2canvas": "^1.0.0-rc.5",
+    "node-html-to-image": "^1.1.0",
+    "puppeteer": "^2.1.1",
+    "request": "^2.88.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.2"
