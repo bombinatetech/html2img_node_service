@@ -12,6 +12,14 @@ var app = express();
 app.set('view engine', 'ejs');
 const nodeHtmlToImage = require('node-html-to-image')
 
+app.get('/healthcheck', function(req, res)
+{
+
+res.send("html to img")
+
+
+});
+
 app.get('/convertHtml2image', function (req, res) {
     nodeHtmlToImage({
         output: './banner.png',
