@@ -8,9 +8,8 @@ API URL: https://prod-htmltoimg.getvokal.com/convertHtml2image?name=Mamta&count=
 
 response: {"url":"https://s3-ap-southeast-1.amazonaws.com/ok.talk.channels/ok.talk.topics/images/banner.png"}
 
+
 How to Deploy
-
 $ npm install
-
 $ pm2 start npm -- start
 
