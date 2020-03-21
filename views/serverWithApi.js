@@ -8,7 +8,7 @@ const PORT = 5000;
 
 app.set('view engine', 'ejs');
 
-app.get('/convertHtml2image', (req, resp) => {
+app.get('/convertHtml2imageExternalApi', (req, resp) => {
     ejs.renderFile('views/banner.ejs', { qs: req.query }, function (err, str) {
         console.log("html: ", str);
         const data = JSON.stringify({
