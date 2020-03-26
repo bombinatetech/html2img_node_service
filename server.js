@@ -1,23 +1,9 @@
 var express = require('express');
 var fs = require('fs');
-var path = require('path');
-var http = require('http');
 var Request = require("request");
-var FormData = require('form-data');
-var FileAPI = require('file-api'),
-    File = FileAPI.File,
-    FileList = FileAPI.FileList,
-    FileReader = FileAPI.FileReader;
 var app = express();
 app.set('view engine', 'ejs');
 const nodeHtmlToImage = require('node-html-to-image')
-
-app.get('/healthcheck', function (req, res) {
-
-    res.send("html to img")
-
-
-});
 
 app.get('/convertHtml2image', function (req, res) {
     nodeHtmlToImage({
@@ -42,7 +28,6 @@ app.get('/convertHtml2image', function (req, res) {
                 }
             };
 
-
             Request.post({
                 "headers": {
                     "Content-Type": "multipart/form-data",
@@ -54,9 +39,10 @@ app.get('/convertHtml2image', function (req, res) {
                 if (error) {
                     return console.log("Error: ", error);
                 }
-                res.send(body);
-                // res.send("output: " + error + ", " + JSON.stringify(response) + ", " + body)
+                var resp = JSON.parse(body)
+                res.json(resp);
             });
+
         })
 })
 
