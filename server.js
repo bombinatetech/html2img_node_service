@@ -12,7 +12,7 @@ app.get('/healthcheck', function (req, res) {
 app.get('/convertHtml2image', function (req, res) {
     nodeHtmlToImage({
         output: './banner.png',
-        html: '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta http-equiv="X-UA-Compatible" content="ie=edge"><title>Banner</title><style>.container{background-color:rgb(255,252,209);padding:2rem}.row{width:100%;display:flex;flex-direction:row;align-items:center;justify-content:center}[class^="col-"]{padding:0 1rem}.img{box-shadow: 3px 3px 8px grey;border-radius:50%;width:8rem;height:8em;object-fit:cover}p{margin:10px 0;font-size:2.2rem;color:red;font-weight:700;font-family:sans-serif}</style></head><body><div id="html-content" class="container"><div class="row"><div class="col-2"><img id="img" class="img" src={{image}} alt="image"/></div><div class="col-10"><p><span id="name">{{name}}</span> is a Top Answerer.</p><p>Recorded <span id="count">{{count}}</span> answers today.</p></div></div></div></body></html>',
+        html: '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta http-equiv="X-UA-Compatible" content="ie=edge"><title>Banner</title><style>.container{background-color:rgb(255, 233, 154);padding:1rem}.row{width:100%;display:flex;flex-direction:row;align-items:center;justify-content:center}[class^="col-"]{padding:0 1rem}.img{box-shadow: 3px 3px 8px grey;border-radius:50%;width:6.5rem;height:6.5em;object-fit:cover}p{margin:2px 0;font-size:1.8rem;color:#ef7b00;font-weight:700;font-family:sans-serif}</style></head><body><div id="html-content" class="container"><div class="row"><div class="col-2"><img id="img" class="img" src={{image}} alt="image"/></div><div class="col-10"><p><span id="name">{{name}}</span> is a Top Answerer.</p><p>Recorded <span id="count">{{count}}</span> answers today.</p></div></div></div></body></html>',
         content: {
             name: req.query.name,
             count: req.query.count,
@@ -26,7 +26,7 @@ app.get('/convertHtml2image', function (req, res) {
                 content_file: {
                     value: fs.createReadStream('banner.png'),
                     options: {
-                        filename: 'banner.png',
+                        filename: `banner-${req.query.language}.png`,
                         contentType: 'image/png'
                     }
                 }
