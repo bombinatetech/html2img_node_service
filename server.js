@@ -10,8 +10,10 @@ app.get('/healthcheck', function (req, res) {
 });
 
 app.get('/convertHtml2image', function (req, res) {
+    let userId = req.query.user_id || 0;
+    let lang = req.query.language || 0;
     nodeHtmlToImage({
-        output: `banner-${req.query.language}.png`,
+        output: `banner-${lang}-${userId}.png`,
         html: '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta http-equiv="X-UA-Compatible" content="ie=edge"><title>Banner</title><style>.container{background-color:rgb(255, 233, 154);padding:1rem}.row{width:100%;display:flex;flex-direction:row;align-items:center;justify-content:center}[class^="col-"]{padding:0 1rem}.img{box-shadow: 3px 3px 8px grey;border-radius:50%;width:6rem;height:6em;object-fit:cover}p{margin:2px 0;font-size:1.6rem;color:gray;font-weight:700;font-family:sans-serif}</style></head><body><div id="html-content" class="container"><div class="row"><div class="col-2"><img id="img" class="img" src={{image}} alt="image"/></div><div class="col-10"><p><span id="name">{{name}}</span> is a Top Answerer.</p><p>Recorded <span id="count">{{count}}</span> answers today.</p></div></div></div></body></html>',
         content: {
             name: req.query.name,
@@ -20,13 +22,12 @@ app.get('/convertHtml2image', function (req, res) {
         }
     })
         .then(() => {
-
             var formData = {
                 name: 'content_file',
                 content_file: {
-                    value: fs.createReadStream(`banner-${req.query.language}.png`),
+                    value: fs.createReadStream(`banner-${lang}-${userId}.png`),
                     options: {
-                        filename: `banner-${req.query.language}.png`,
+                        filename: `banner-${lang}-${userId}.png`,
                         contentType: 'image/png'
                     }
                 }
